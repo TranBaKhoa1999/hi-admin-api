@@ -1,0 +1,17 @@
+Homestead.json
+Homestead.yaml
+.phpunit.result.cache
+/node_modules
+/public/hot
+/public/storage
+composer.lock
+/storage/*.key
+/vendor
+# ignore env
+.env
+.env.backup
+docker-compose.override.yml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
