@@ -16,7 +16,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-$router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('/test','Controller@test');
+$router->group(['prefix' => 'api','middleware' => ['gateway.auth']], function () use ($router) {
+    $router->get('/test','ExampleController@test');
 });
 

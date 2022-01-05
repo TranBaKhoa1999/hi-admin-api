@@ -2,11 +2,14 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\StatusCodeObject;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -49,6 +52,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        return parent::render($request, $exception);
+        $classException = get_class($exception);
+        switch($classException){
+            case NotFoundHttpException::class:
+                return printJson(null,buildStatusObject('PAGE_NOT_FOUND'));
+            case MethodNotAllowedHttpException::class:
+                return printJson(null,buildStatusObject('METHOD_NOT_ALLOWED'));
+            case AccessDeniedHttpException::class:
+                return printJson(null,buildStatusObject('FORBIDDEN'));
+            case UnauthorizedHttpException::class:
+                return printJson(null,buildStatusObject('UNAUTHORIZED'));
+            case ServiceUnavailableHttpException::class:
+                return printJson(null,buildStatusObject('SERVICE_UNAVAILABLE'));
+            default:
+                return parent::render($request, $exception);
+        }
     }
 }
