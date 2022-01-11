@@ -6,6 +6,9 @@ require_once __DIR__.'/../vendor/autoload.php';
     dirname(__DIR__)
 ))->bootstrap();
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__,'../.env.'.getenv('APP_ENV'));
+$dotenv->load();
+
 date_default_timezone_set(env('APP_TIMEZONE', 'Asia/Ho_Chi_Minh'));
 
 /*
@@ -75,10 +78,10 @@ $app->configure('app');
 // $app->middleware([
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
-
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'gateway.auth'   => App\Http\Middleware\GatewayAuthenticationMiddleware::class,
+    //     'auth' => App\Http\Middleware\Authenticate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -91,9 +94,7 @@ $app->configure('app');
 |
 */
 
-$app->routeMiddleware([
-    'gateway.auth'   => App\Http\Middleware\GatewayAuthenticationMiddleware::class,
-]);
+
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
