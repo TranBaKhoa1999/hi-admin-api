@@ -80,6 +80,7 @@ $app->configure('app');
 // ]);
 $app->routeMiddleware([
     'gateway.auth'   => App\Http\Middleware\GatewayAuthenticationMiddleware::class,
+    'auth.customer'  => App\Http\Middleware\AuthenticationCustomer::class,
     //     'auth' => App\Http\Middleware\Authenticate::class,
 ]);
 

@@ -1,13 +1,14 @@
 <?php
 if (!function_exists('printJson')) {
-     function printJson($data, $statusObject = null){
-
+     function printJson($data, $statusObject = null, $lang = null){
         if($statusObject == null){
             $statusObject = buildStatusObject('HTTP_OK');
         };
+        
         $response = [];
+    
         $response['statusCode'] = $statusObject->code;
-        $response['message'] = $statusObject->message;
+        $response['message'] = ($lang == 'en') ? $statusObject->message_en : $statusObject->message;
         $response['data'] = $data;
         return response()->json($response);
     }
