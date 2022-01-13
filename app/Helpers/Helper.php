@@ -1,6 +1,10 @@
 <?php
 if (!function_exists('printJson')) {
-     function printJson($data, $statusObject){
+     function printJson($data, $statusObject = null){
+
+        if($statusObject == null){
+            $statusObject = buildStatusObject('HTTP_OK');
+        };
         $response = [];
         $response['statusCode'] = $statusObject->code;
         $response['message'] = $statusObject->message;

@@ -18,7 +18,6 @@ class ExampleController extends MY_Controller
             $result = [
                 'test' => date('d-m-Y h:i:s')
             ];
-            $statusObject = buildStatusObject('HTTP_OK');
         }catch(Exception $e){
             $statusObject = buildStatusObject($e->getMessage());
         }
